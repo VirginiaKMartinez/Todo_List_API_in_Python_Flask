@@ -1,6 +1,25 @@
 from flask_sqlalchemy import SQLAlchemy
+import datetime
 
 db = SQLAlchemy()
+
+#creando la tabla de la base de datos
+class Post(db.Model):
+    id= db.Column(db.Integer, primary_key=True)
+    text_post = db.Column(db.String(250),nullable=False)
+    date_post = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+#constructor para iniciar los valores
+    def __init__(self, text):
+        self.text_post = text
+
+#funcion que retorna los datos 
+    def serialize(self):
+        return{
+            "id": self.id,
+            "text_post": self.text_post,
+            "date_post ": self.date_post
+        }
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
